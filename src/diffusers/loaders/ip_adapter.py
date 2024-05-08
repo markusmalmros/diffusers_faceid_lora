@@ -58,6 +58,7 @@ class IPAdapterMixin:
         subfolder: Union[str, List[str]],
         weight_name: Union[str, List[str]],
         image_encoder_folder: Optional[str] = "image_encoder",
+        faceid_lora_weight: Union[int, List[int]] = 1.0,
         **kwargs,
     ):
         """
@@ -243,7 +244,8 @@ class IPAdapterMixin:
                 for k, lora in extra_loras.items():
                     if f"faceid_{k}" not in peft_config:
                         self.load_lora_weights(lora, adapter_name=f"faceid_{k}")
-                        self.set_adapters([f"faceid_{k}"], adapter_weights=[1.0])
+                        self.set_adapters([f"faceid_{k}"], adapter_weights=[faceid_lora_weight])
+                        #self.set_adapters([f"faceid_{k}"], adapter_weights=[1.0])
 
     def set_ip_adapter_scale(self, scale):
         """
